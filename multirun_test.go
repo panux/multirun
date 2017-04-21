@@ -15,14 +15,14 @@ func TestAdd(t *testing.T) {
 		expectsum += dat[i]
 	}
 	out := make([]int, len(dat)/100)
-	Run(SimpleRunnable(func(iter int) {
+	Array(out, func(iter int) {
 		slice := dat[iter*100 : iter*100+100]
 		sum := 0
 		for _, v := range slice {
 			sum += v
 		}
 		out[iter] = sum
-	}), len(out), 7)
+	})
 	sum := 0
 	for _, v := range out {
 		sum += v

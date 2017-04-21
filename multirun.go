@@ -1,7 +1,11 @@
 //Package multirun is a quick and easy package to run a batch task on multiple goroutines
 package multirun
 
-import "sync"
+import (
+	"reflect"
+	"runtime"
+	"sync"
+)
 
 //Runnable is an interface for any runnable task type
 type Runnable interface {
@@ -39,4 +43,9 @@ func Run(r Runnable, count int, goroutines int) {
 	}
 	close(work)
 	locker.Lock() //Wait for everything to finish
+}
+
+//Array iterates over an array in parallell
+func Array(arr interface{}, task func(int)) {
+	Run(SimpleRunnable(task), reflect.ValueOf(arr).Len(), runtime.NumCPU())
 }
