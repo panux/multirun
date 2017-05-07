@@ -7,6 +7,9 @@ import (
 	"sync"
 )
 
+//DefaultGoroutines is the default number of goroutines to use
+var DefaultGoroutines int
+
 //Runnable is an interface for any runnable task type
 type Runnable interface {
 	Run(int)
@@ -47,5 +50,9 @@ func Run(r Runnable, count int, goroutines int) {
 
 //Array iterates over an array in parallell
 func Array(arr interface{}, task func(int)) {
-	Run(SimpleRunnable(task), reflect.ValueOf(arr).Len(), runtime.NumCPU())
+	Run(SimpleRunnable(task), reflect.ValueOf(arr).Len(), DefaultGoroutines)
+}
+
+func init() {
+	DefaultGoroutines = runtime.NumCPU()
 }

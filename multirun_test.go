@@ -7,6 +7,7 @@ import (
 
 //Test multithreaded adding
 func TestAdd(t *testing.T) {
+	DefaultGoroutines *= 2
 	ran := rand.New(rand.NewSource(10))
 	dat := make([]int, 1000000)
 	expectsum := 0
